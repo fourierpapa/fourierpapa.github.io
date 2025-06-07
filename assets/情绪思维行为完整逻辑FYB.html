@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>情绪察觉与需求确认表单</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            font-size: 1.2rem; /* 调整字体大小为150% */
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2, h3, h4, h5 {
+            color: #333;
+        }
+        .section {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            max-width: 800px; /* 限制最大宽度 */
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .btn-submit {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn-submit:hover {
+            background-color: #45a049;
+        }
+        .multi-step {
+            margin-top: 20px;
+        }
+        .step {
+            margin-bottom: 20px;
+        }
+        .principle {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .summary-title {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .summary-section {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 15px;
+        }
+        .summary-header {
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            margin-top: 0;
+        }
+        .emotion-title {
+            color: #4CAF50;
+        }
+        .thinking-title {
+            color: #2196F3;
+        }
+        .action-title {
+            color: #FF9800;
+        }
+        .hidden {
+            display: none;
+        }
+        .tab {
+            overflow: hidden;
+            border: 1px solid #ccc;
+            background-color: #f1f1f1;
+        }
+        .tab button {
+            background-color: inherit;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+        .tab button:hover {
+            background-color: #ddd;
+        }
+        .tab button.active {
+            background-color: #ccc;
+        }
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+            position: relative;
+        }
+        .timer {
+            font-size: 24px; /* 增大字体大小 */
+            color: red;
+            margin-bottom: 20px;
+            text-align: center; /* 居中显示 */
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .save-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+        .steps-list {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+        .steps-list li {
+            margin-bottom: 5px;
+        }
+        .steps-button {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>情绪察觉与需求确认表单，10mins</h1>
+
+        <!-- 标签切换 -->
+        <div class="tab">
+            <button class="tablinks active" onclick="openTab(event, 'emotionHandling')">情绪察觉</button>
+            <button class="tablinks" onclick="openTab(event, 'thinkingSolution')">思维方案</button>
+            <button class="tablinks" onclick="openTab(event, 'activeDoing')">行动积极</button>
+        </div>
+
+        <!-- 情绪处理部分 -->
+        <div id="emotionHandling" class="tabcontent" style="display: block;">
+            <h2>情绪来临后，不加评判的识别</h2>
+
+            <div class="section">
+                <h3>1. 明确场景</h3>
+
+                <div class="form-group">
+                    <label>当前情绪状态描述：</label>
+                    <textarea id="emotionDescription" placeholder="
+                    「5-4-3-2-1」感受着陆：快速辨识并体验感受，
+                    5种颜色→4种触感→3种声音→2种气味→1种味觉"></textarea>
+                </div>
+
+                <h4>1.1 接受自己情绪，确认自己需求</h4>
+
+                <div id="selfRegulation">
+                    <div class="form-group">
+                        <label>一级：基础情绪类别</label>
+                        <textarea id="basicEmotion" placeholder="平静、恐惧、羞怯、悲伤、惊讶、愤怒、舒适、快乐"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>二级：场景触发源</label>
+                        <textarea id="sceneTrigger" placeholder="描述情绪产生的场景触发源..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>三级：具体诱因描述</label>
+                        <textarea id="specificCause" placeholder="详细描述导致情绪产生的具体诱因..."></textarea>
+                    </div>
+                </div>
+
+                <div id="othersRegulation" style="display: none;">
+                    <div class="form-group">
+                        <label>理解接受情绪，而不是感到情绪被否定</label>
+                        <textarea id="understandEmotion" placeholder="记录您如何理解对方情绪..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>拆解问题，找到可控点</label>
+                        <textarea id="decomposeProblem" placeholder="记录您如何拆解问题并找到可控点..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>给出可执行方案，而不是空泛建议</label>
+                        <textarea id="executablePlan" placeholder="记录您给出的具体可执行方案..."></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>让对方感受到支持，不是一个人</label>
+                        <textarea id="supportOthers" placeholder="记录您如何让对方感受到支持..."></textarea>
+                    </div>
+                </div>
+
+                <h4>1.2 意图判断：确认外部或对方真实需求，察觉真实目的，「5W追问法」</h4>
+
+                <div class="form-group">
+                    <label>Who（受影响主体）</label>
+                    <textarea id="who" placeholder="记录受影响的主体是谁..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>When（时效要求）</label>
+                    <textarea id="when" placeholder="记录需求的时效要求..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Where（作用范围）</label>
+                    <textarea id="where" placeholder="记录需求的作用范围..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>What（具体期望）</label>
+                    <textarea id="what" placeholder="记录对方的具体期望是什么..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Why（深层动机）</label>
+                    <textarea id="why" placeholder="分析对方的深层动机..."></textarea>
+                </div>
+
+                <button class="btn-submit" onclick="showSummary()">显示总结</button>
+                <div id="summaryTable" class="hidden">
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>项目</th>
+                                <th>内容</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Who（受影响主体）</td>
+                                <td id="summaryWho"></td>
+                            </tr>
+                            <tr>
+                                <td>When（时效要求）</td>
+                                <td id="summaryWhen"></td>
+                            </tr>
+                            <tr>
+                                <td>Where（作用范围）</td>
+                                <td id="summaryWhere"></td>
+                            </tr>
+                            <tr>
+                                <td>What（具体期望）</td>
+                                <td id="summaryWhat"></td>
+                            </tr>
+                            <tr>
+                                <td>Why（深层动机）</td>
+                                <td id="summaryWhy"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <button class="btn-submit save-btn" onclick="submitForm()">保存</button>
+        </div>
+
+        <!-- 思维方案部分 -->
+        <div id="thinkingSolution" class="tabcontent">
+            <div class="timer" id="countdownTimer">剩余时间: 10:00</div>
+            <h2>思维方案</h2>
+            <div class="section">
+                <h3>2. 接受差距，扩展思考维度，确认目标和调整需求</h3>
+
+                <div class="form-group">
+                    <label>设定「3-5-1法则」</label>
+                    <div class="multi-step">
+                        <div class="step">
+                            <label>最多找3个核心因素</label>
+                            <textarea id="coreFactors" placeholder="列出您认为的3个核心因素...
+                            2个正向原因。为了实现目标，我需要做什么？
+                            1个逆向原因，为了避免失败，我需要避免什么？"></textarea>
+                        </div>
+
+                        <div class="step">
+                            <label>用5分钟决策执行方案</label>
+                            <textarea id="executionPlan" placeholder="记录您在5分钟内决策的执行方案..."></textarea>
+                        </div>
+
+                        <div class="step">
+                            <label>留1个备用执行方案</label>
+                            <textarea id="backupPlan" placeholder="记录您的备用执行方案..."></textarea>
+                        </div>
+
+                        <div class="step">
+                            <label>设定备用方案切换条件</label>
+                            <textarea id="switchCondition" placeholder="设定备用方案切换的条件..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <h4>职业定位表（仅供参考，无需填写）</h4>
+
+                <div class="principle">
+                    <p>当前最想获得的3项能力</p>
+                    <ol>
+                        <li>对基础原理有正确和深刻理解，明确有价值问题和方向</li>
+                        <li>建立【搜聚分验合】自己的工作流</li>
+                        <li>建立自己工作原则与边界，和自己价值相关判断流程</li>
+                    </ol>
+                </div>
+
+                <div class="principle">
+                    <p>半年内必须达成的1个里程碑</p>
+                    <ol>
+                        <li>【做有自己代表性的研究工作】</li>
+                        <ol>
+                            <li>选一个有价值方向，做深刻一件事，发现新现象与已有观念的冲突，创造基于生物性的新需求</li>
+                        </ol>
+                    </ol>
+                </div>
+
+                <div class="principle">
+                    <p>绝对不接受的3种工作状态</p>
+                    <ol>
+                        <li>健康优先：连续加班到22点超3天</li>
+                        <li>家庭优先：周末不能自己支配时间</li>
+                        <li>职业发展优先：连续两周干垃圾活时间超过周总时间20%</li>
+                        <ol>
+                            <li>不涉及三项能力项、无法写入成果报告、重复机械劳动</li>
+                        </ol>
+                    </ol>
+                </div>
+
+                <div class="principle">
+                    <p>缓冲阈值：老板烧屁股要救，每个月最多一次</p>
+                </div>
+            </div>
+            <button class="btn-submit save-btn" onclick="submitForm()">保存</button>
+        </div>
+
+        <!-- 行动积极部分 -->
+        <div id="activeDoing" class="tabcontent">
+            <div class="timer" id="countdownTimerDisplay">剩余时间: 10:00</div>
+            <h2>行动积极</h2>
+            <div class="section">
+                <h3>3. 五步法</h3>
+
+                <div class="multi-step">
+                    <div class="step">
+                        <h4>3.1 察觉情绪，确认需求</h4>
+                        <div class="form-group">
+                            <textarea id="confirmDemand" placeholder="记录您通过觉察情绪后，确认的需求..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h4>3.2 删除多余</h4>
+
+                        <div class="form-group">
+                            <label>删除多余步骤</label>
+                            <textarea id="deleteSteps" placeholder="记录您删除的多余步骤..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>需要时不时加回被删除的内容</label>
+                            <textarea id="addBackContent" placeholder="记录需要加回的内容及原因..."></textarea>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h4>3.3 简化问题</h4>
+                        <div class="form-group">
+                            <textarea id="simplifyProblem" placeholder="记录您如何简化问题..."></textarea>
+                        </div>
+                        <button class="btn-submit steps-button" onclick="showSteps()">明确步骤</button>
+                        <div id="stepsList" class="hidden">
+                            <ul class="steps-list" id="stepsContent"></ul>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <h4>3.4 加速循环</h4>
+                        <div class="principle">
+                            <p>一定先做好前面三步</p>
+                            <p>不要在挖坟墓的时候挖太快</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <h4>3.5 自动化</h4>
+                        <div class="form-group">
+                            <textarea id="automation" placeholder="记录可自动化的部分及实现方式..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-submit save-btn" onclick="submitForm()">保存</button>
+        </div>
+    </div>
+
+    <script>
+        // 保存路径记忆
+        let lastSavePath = localStorage.getItem('lastSavePath') || '';
+        let countdownInterval;
+        let timeLeft = 10 * 60; // 20分钟倒计时
+        let timerStarted = false; // 标记倒计时是否已启动
+
+        // 提交表单并导出CSV
+        function submitForm() {
+            // 获取表单数据
+            const mode = document.getElementById('modeSelect') ? document.getElementById('modeSelect').value : '未选择模式';
+            const timestamp = new Date().toISOString();
+            
+            // 构建结构化数据对象
+            const formData = {
+                timestamp,
+                mode,
+                emotionDescription: document.getElementById('emotionDescription') ? document.getElementById('emotionDescription').value : '',
+                regulationMethod: document.getElementById('regulationMethod') ? document.getElementById('regulationMethod').value : '',
+                basicEmotion: document.getElementById('basicEmotion') ? document.getElementById('basicEmotion').value : '',
+                sceneTrigger: document.getElementById('sceneTrigger') ? document.getElementById('sceneTrigger').value : '',
+                specificCause: document.getElementById('specificCause') ? document.getElementById('specificCause').value : '',
+                understandEmotion: document.getElementById('understandEmotion') ? document.getElementById('understandEmotion').value : '',
+                decomposeProblem: document.getElementById('decomposeProblem') ? document.getElementById('decomposeProblem').value : '',
+                executablePlan: document.getElementById('executablePlan') ? document.getElementById('executablePlan').value : '',
+                supportOthers: document.getElementById('supportOthers') ? document.getElementById('supportOthers').value : '',
+                fiveW: {
+                    who: document.getElementById('who') ? document.getElementById('who').value : '',
+                    what: document.getElementById('what') ? document.getElementById('what').value : '',
+                    when: document.getElementById('when') ? document.getElementById('when').value : '',
+                    why: document.getElementById('why') ? document.getElementById('why').value : '',
+                    where: document.getElementById('where') ? document.getElementById('where').value : ''
+                },
+                strategy351: {
+                    coreFactors: document.getElementById('coreFactors') ? document.getElementById('coreFactors').value : '',
+                    executionPlan: document.getElementById('executionPlan') ? document.getElementById('executionPlan').value : '',
+                    backupPlan: document.getElementById('backupPlan') ? document.getElementById('backupPlan').value : '',
+                    switchCondition: document.getElementById('switchCondition') ? document.getElementById('switchCondition').value : ''
+                },
+                fiveSteps: {
+                    confirmDemand: document.getElementById('confirmDemand') ? document.getElementById('confirmDemand').value : '',
+                    deleteSteps: document.getElementById('deleteSteps') ? document.getElementById('deleteSteps').value : '',
+                    addBackContent: document.getElementById('addBackContent') ? document.getElementById('addBackContent').value : '',
+                    simplifyProblem: document.getElementById('simplifyProblem') ? document.getElementById('simplifyProblem').value : '',
+                    automation: document.getElementById('automation') ? document.getElementById('automation').value : ''
+                }
+            };
+
+            // 生成CSV内容
+            const csvContent = [
+                // 表头
+                "时间戳,模式,情绪状态,调节方式,基础情绪,触发场景,具体诱因,理解情绪,拆解问题,执行方案,支持方式,Who,What,When,Why,Where,核心因素,执行计划,备用计划,切换条件,确认需求,删除步骤,加回内容,简化问题,自动化",
+                // 数据行
+                [
+                    formData.timestamp,
+                    formData.mode,
+                    formData.emotionDescription,
+                    formData.regulationMethod,
+                    formData.basicEmotion,
+                    formData.sceneTrigger,
+                    formData.specificCause,
+                    formData.understandEmotion,
+                    formData.decomposeProblem,
+                    formData.executablePlan,
+                    formData.supportOthers,
+                    formData.fiveW.who,
+                    formData.fiveW.what,
+                    formData.fiveW.when,
+                    formData.fiveW.why,
+                    formData.fiveW.where,
+                    formData.strategy351.coreFactors,
+                    formData.strategy351.executionPlan,
+                    formData.strategy351.backupPlan,
+                    formData.strategy351.switchCondition,
+                    formData.fiveSteps.confirmDemand,
+                    formData.fiveSteps.deleteSteps,
+                    formData.fiveSteps.addBackContent,
+                    formData.fiveSteps.simplifyProblem,
+                    formData.fiveSteps.automation
+                ].join(",")
+            ].join("\n");
+
+            // 创建CSV文件
+            const blob = new Blob(
+                [new Uint8Array([0xEF, 0xBB, 0xBF]), csvContent], // 添加BOM头
+                { type: "text/csv;charset=utf-8" }
+            );
+
+            // 生成文件名（带时间戳）
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const fileName = `情绪记录_${year}${month}${day}_${hours}${minutes}${seconds}.csv`;
+            
+            // 创建下载链接
+            const link = document.createElement('a');
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', fileName);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // 保存当前路径到localStorage
+                localStorage.setItem('lastSavePath', fileName);
+            }
+        }
+
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            // 如果是首次切换到后两个标签，启动倒计时
+            if (!timerStarted && (tabName === 'thinkingSolution' || tabName === 'activeDoing')) {
+                startCountdown();
+                timerStarted = true;
+            }
+        }
+
+        function showSummary() {
+            document.getElementById('summaryWho').textContent = document.getElementById('who').value;
+            document.getElementById('summaryWhere').textContent = document.getElementById('where').value;
+            document.getElementById('summaryWhen').textContent = document.getElementById('when').value;
+            document.getElementById('summaryWhat').textContent = document.getElementById('what').value;
+            document.getElementById('summaryWhy').textContent = document.getElementById('why').value;         
+            
+            document.getElementById('summaryTable').classList.remove('hidden');
+        }
+
+        function startCountdown() {
+            // 重置时间
+            timeLeft = 10 * 60;
+
+            // 更新显示
+            updateTimerDisplay();
+
+            // 启动计时器
+            countdownInterval = setInterval(function() {
+                timeLeft--;
+                updateTimerDisplay();
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdownInterval);
+                    alert("时间到！请保存您的工作。");
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const displayText = `剩余时间: ${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+            
+            document.getElementById('countdownTimer').textContent = displayText;
+            document.getElementById('countdownTimerDisplay').textContent = displayText;
+        }
+
+        function showSteps() {
+            const simplifyProblemText = document.getElementById('simplifyProblem').value;
+            const stepsList = document.getElementById('stepsList');
+            const stepsContent = document.getElementById('stepsContent');
+            
+            // 清空现有内容
+            stepsContent.innerHTML = '';
+            
+            // 用句号或换行分割文本
+            const steps = simplifyProblemText.split(/[\.\n]+/).filter(step => step.trim() !== '');
+            
+            // 创建列表项
+            steps.forEach((step, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${index + 1}. ${step.trim()}`;
+                stepsContent.appendChild(li);
+            });
+            
+            // 显示列表
+            stepsList.classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
