@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>明确自身状态和精力选择</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        /* 设置基础字体大小 */
+        html {
+            font-size: 30px;
+        }
+
+        /* 媒体查询，针对小屏幕设备（如手机） */
+        @media screen and (max-width: 768px) {
+            html {
+                font-size: 20px;
+            }
+            
+            body {
+                padding: 0.625rem; /* 10px / 16px */
+            }
+            
+            .container {
+                padding: 1.25rem; /* 20px / 16px */
+                border-radius: 0.75rem; /* 12px / 16px */
+            }
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f0f5ff;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1.25rem; /* 20px / 16px */
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: white;
+            border-radius: 0.9375rem; /* 15px / 16px */
+            padding: 1.875rem; /* 30px / 16px */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin: auto;
+            box-sizing: border-box;
+        }
+
+        .step {
+            display: none;
+            animation: fadeIn 0.3s ease;
+            text-align: center;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        .option {
+            padding: 0.9375rem; /* 15px / 16px */
+            margin: 0.625rem auto; /* 10px / 16px */
+            background: #f8f9ff;
+            border-radius: 0.5rem; /* 8px / 16px */
+            cursor: pointer;
+            transition: all 0.2s;
+            border-left: 0.25rem solid #a8c7fa; /* 4px / 16px */
+            max-width: 37.5rem; /* 600px / 16px */
+            box-sizing: border-box;
+        }
+
+        h2 {
+            color: #4a6da7;
+            margin-bottom: 1.875rem; /* 30px / 16px */
+            border-bottom: 0.125rem solid #e1e8ff; /* 2px / 16px */
+            padding-bottom: 0.625rem; /* 10px / 16px */
+            text-align: center;
+        }
+
+        .option:hover {
+            background: #e1e8ff;
+            transform: translateX(0.625rem); /* 10px / 16px */
+        }
+
+        .option.final {
+            border-left-color: #7aa3f5;
+            background: #e8f4ff;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(0.625rem); } /* 10px / 16px */
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 保持原有步骤结构不变 -->
+        <div id="step0" class="step active">
+            <h2>请选择个人状态：</h2>
+            <div class="option" onclick="showNext(1)">感受自己，获得掌控感，滋养自己</div>
+            <div class="option" onclick="showNext(4)">精力溢出后，会选择做一些事情</div>
+        </div>
+
+        <div id="step1" class="step">
+            <h2>感受自己，获得掌控感，滋养自己：</h2>
+            <div class="option" onclick="showNext(2)">只处于和自己相处的状态，察觉自己感受</div>
+        </div>
+
+        <div id="step2" class="step">
+            <h2>只处于和自己相处状态，察觉自己不评判感受：</h2>
+            <div class="option final" onclick="openLink('https://y5brcj8w4il.sg.larksuite.com/docx/WBiSd18n4oNyusxG1PmloXu4gEd')">5分钟进入道</div>            
+            <div class="option final" onclick="openLink('https://y5brcj8w4il.sg.larksuite.com/mindnotes/AlJyb1DJQmiJyqns78llOx6vgKh#mindmap')">我已到达平静</div>
+            <div class="option final" onclick="openLink('情绪思维行为完整逻辑FYB.html')">察觉自己复杂感受</div>
+        </div>
+
+        <div id="step4" class="step">
+            <h2>请选择行动类型：</h2>
+            <div class="option" onclick="showNext(5)">取悦自己</div>
+            <div class="option" onclick="showNext(7)">对长远目标负责，维护长远目标</div>
+        </div>
+
+        <div id="step5" class="step">
+            <h2>选择取悦方式：</h2>
+            <div class="option" onclick="showNext(6)">高频刺激释放多巴胺</div>
+            <div class="option" onclick="openLink('https://www.bilibili.com/watchlater/list')">心流状态释放多巴胺</div>
+        </div>
+
+        <div id="step6" class="step">
+            <h2>选择内容类型：</h2>
+            <div class="option" onclick="openLink('https://www.bilibili.com/c/dance/')">看擦边内容</div>
+            <div class="option" onclick="openLink('https://bilibili.com')">打开bilibili</div>
+        </div>
+
+        <div id="step7" class="step">
+            <h2>请选择维护目标类型：</h2>
+            <div class="option" onclick="openLink('https://dida365.com/webapp/#q/all/tasks')">完成之前设定的任务</div>
+            <div class="option" onclick="showNext(8)">设定新的长远目标</div>
+            <div class="option" onclick="openLink('https://www.google.com/ncr')">40 mins 自由探索</div>
+        </div>
+
+        <div id="step8" class="step">
+            <h2>确认长远目标：</h2>
+            <div class="option final" onclick="openLink('有效建立目标FYB.html')">新窗口打开有效设定目标</div>
+        </div>
+    </div>
+
+    <script>
+        function showNext(stepNumber) {
+            try {
+                const currentStep = document.querySelector('.step.active');
+                const nextStep = document.getElementById(`step${stepNumber}`);
+                
+                if (currentStep) currentStep.classList.remove('active');
+                if (nextStep) {
+                    nextStep.classList.add('active');
+                    // 自动滚动到顶部
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                    console.error('找不到目标步骤');
+                    document.getElementById('step0').classList.add('active');
+                }
+            } catch (error) {
+                console.error('步骤切换错误:', error);
+                document.getElementById('step0').classList.add('active');
+            }
+        }
+
+        function openLink(url) {
+            try {
+                window.open(url, '_blank');
+            } catch (e) {
+                console.error('打开链接失败:', e);
+                alert('无法打开链接，请检查地址是否正确');
+            }
+        }
+    </script>
+</body>
+</html>

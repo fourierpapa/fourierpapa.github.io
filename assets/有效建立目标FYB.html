@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>有效建立目标</title>
+    <style>
+        .multi-step {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* 步骤间间距 */
+    margin-top: 10px;
+        }
+
+        .step {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        .step label {
+            color: #2c3e50;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .step textarea {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            min-height: 80px;
+        }
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .section {
+            background-color: #fff;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #3498db;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .example {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 15px 0;
+            font-style: italic;
+            color: #666;
+        }
+        .tip {
+            background-color: #e9f7fe;
+            border-left: 3px solid #3498db;
+            padding: 10px;
+            margin: 15px 0;
+        }
+        .smart-explanation {
+            display: flex;
+            margin-top: 15px;
+        }
+        .smart-item {
+            flex: 1;
+            text-align: center;
+            padding: 10px;
+            border-right: 1px solid #eee;
+        }
+        .smart-item:last-child {
+            border-right: none;
+        }
+        .smart-title {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        .action-dimensions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .dimension {
+            background-color: #f1f1f1;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+        .generated-content {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 4px;
+            display: none;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .timer-container {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 18px;
+            font-weight: bold;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>有效建立目标</h1>
+            <p>通过结构化的方法，帮助你更有效地进行复盘，提升个人成长效率</p>
+            
+            <!-- 倒计时功能 -->
+            <div class="timer-container">
+                <span id="timer">10:00</span>
+            </div>
+        </header>
+
+        <!-- 回顾核心目标部分 -->
+        <section class="section">
+            <h2>1. 回顾核心目标</h2>
+            
+            <div class="form-group">
+                <label for="today-goal">五步法, Step 1：确认需求</label>
+                <textarea id="today-goal" placeholder="例如：一个月减2公斤，提升耐力，每周跑4次。可衡量的数值用0-9标记"></textarea>
+            </div>
+        </section>
+            
+        <!-- 记录事实部分 -->
+        <!-- <section class="section">
+            <h2>2. 记录事实</h2>
+            <p>客观记录你的行动和结果，避免情绪化归因</p>
+            
+            <div class="form-group">
+                <label for="actions">采取的行动：</label>
+                <textarea id="actions" placeholder="例如：周一跑步30分钟，周二做瑜伽20分钟..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="results">获得的结果：</label>
+                <textarea id="results" placeholder="例如：本周体重减少0.5公斤，跑步耐力提升10%..."></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="quantitative">量化数据：</label>
+                <textarea id="quantitative" placeholder="例如：体重：70kg→69.5kg，跑步距离：3km→3.5km..."></textarea>
+            </div>
+            
+            <div class="tip">
+                <p>尽量使用具体数据和事实，避免主观评价和情绪化描述</p>
+            </div>
+            
+            <button onclick="recordFacts()">显示记录结果</button>
+            <div class="generated-content" id="facts-result"></div>
+        </section> -->
+
+        <!-- 分析问题部分 -->
+        <section class="section">
+            <h2>3. 分析问题</h2>
+
+            <div class="form-group">
+                <label for="problem-analysis">问题分析，给出所有能想到的原因</label>
+                <textarea id="problem-analysis" placeholder="例如：通过5W分析法，发现主要原因是..."></textarea>
+            </div>
+            
+            <div class="example">
+                <p>错误分析：运气不好，状态不佳</p>
+                <p>正确分析：时间管理不当，训练计划不合理</p>
+            </div>
+            
+            <div class="tip">
+                <p>使用5W分析法（Who/When/Where/What/Why）找到问题本质</p>
+            </div>
+            
+            <button onclick="analyzeProblems()">生成分析报告</button>
+            <div class="generated-content" id="analysis-result"></div>
+        </section>
+
+        <!-- 优化行动部分 -->
+        <section class="section">
+            <h2>4. 优化行动</h2>
+            <p>根据根本问题，使用「3-5-1法则」制定可执行的优化方案</p>
+            
+            <div class="form-group">
+                <label>设定「3-5-1法则」</label>
+                <div class="multi-step">
+                    <div class="step">
+                        <label>五步法, Step 2：删除多余，留下最多3个核心因素</label>
+                        <textarea id="coreFactors" placeholder="列出您认为的3个核心因素...
+        2个正向原因：为了实现目标，我需要做什么？
+        1个逆向原因：为了避免失败，我需要避免什么？"></textarea>
+                    </div>
+
+                    <div class="step">
+                        <label>五步法, Step 3：简化问题，用5分钟决策执行方案</label>
+                        <textarea id="executionPlan" placeholder="记录您在5分钟内决策的执行方案..."></textarea>
+                    </div>
+
+                    <div class="step">
+                        <label>五步法, Step 2：时不时加回被删除的内容，留1个备用执行方案</label>
+                        <textarea id="backupPlan" placeholder="记录您的备用执行方案..."></textarea>
+                    </div>
+
+                    <div class="step">
+                        <label>设定备用方案切换条件</label>
+                        <textarea id="switchCondition" placeholder="设定备用方案切换的条件（如：连续3天未达成A目标时切换）..."></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-dimensions">
+                <span class="dimension">核心因素</span>
+                <span class="dimension">执行方案</span>
+                <span class="dimension">备用方案</span>
+                <span class="dimension">切换条件</span>
+            </div>
+            
+            <div class="tip">
+                <p>3-5-1法则：聚焦3个关键因素、5分钟快速决策、1个备用方案确保灵活性</p>
+            </div>
+            
+            <button onclick="optimizeActions()">确认优化方案</button>
+            <div class="generated-content" id="action-result"></div>
+        </section>
+
+        <!-- 明确下一阶段目标部分 -->
+        <section class="section">
+            <h2>5. 明确下一阶段目标</h2>
+            <p>使用SMART原则设定具体、可衡量、可实现、相关联、有时限的目标</p>
+            
+            <div class="form-group">
+                <label for="next-goal">五步法, Step 4&5：加速循环与自动化，明确下一阶段目标：</label>
+                <textarea id="next-goal" placeholder="例如：一个月减2公斤，提升耐力，每周跑4次。可衡量的数值用0-9标记"></textarea>
+            </div>
+            
+            <div class="smart-explanation">
+                <div class="smart-item">
+                    <div class="smart-title">具体的 (Specific)</div>
+                    <p>目标描述要明确具体，避免模糊不清</p>
+                </div>
+                <div class="smart-item">
+                    <div class="smart-title">可衡量的 (Measurable)</div>
+                    <p>有明确的衡量标准，可量化或可观察</p>
+                </div>
+                <div class="smart-item">
+                    <div class="smart-title">可达到的 (Attainable)</div>
+                    <p>目标具有挑战性但可实现</p>
+                </div>
+                <div class="smart-item">
+                    <div class="smart-title">相关性 (Relevant)</div>
+                    <p>与你的长期目标或价值观一致</p>
+                </div>
+                <div class="smart-item">
+                    <div class="smart-title">有时限的 (Time-bound)</div>
+                    <p>有明确的完成时间或期限</p>
+                </div>
+            </div>
+            
+            <div class="tip">
+                <p>SMART原则是设定有效目标的关键，确保你的目标既具有挑战性又可实现</p>
+            </div>
+            
+            <button onclick="validateGoal()">验证目标是否符合SMART原则</button>
+            <div class="generated-content" id="goal-result"></div>
+        </section>
+
+        <!-- 保存为CSV部分 -->
+        <section class="section">
+            <h2>6. 保存为CSV文件</h2>
+            <p>将所有记录保存为CSV文件，方便后续汇总和分析</p>
+            
+            <button onclick="saveAsCSV()">保存为CSV文件</button>
+            <div class="generated-content" id="csv-result"></div>
+        </section>
+    </div>
+
+    <script>
+        // 全局变量，用于存储上次保存的路径
+        let lastSavePath = localStorage.getItem('lastSavePath') || '';
+
+        // 倒计时功能
+        let timer;
+        let minutes = 10;
+        let seconds = 0;
+
+        function startTimer() {
+            updateTimerDisplay();
+            timer = setInterval(() => {
+                if (seconds === 0) {
+                    if (minutes === 0) {
+                        clearInterval(timer);
+                        alert('时间到！请保存你的复盘记录。');
+                        return;
+                    }
+                    minutes--;
+                    seconds = 59;
+                } else {
+                    seconds--;
+                }
+                updateTimerDisplay();
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            document.getElementById('timer').textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // 页面加载时启动倒计时
+        window.onload = function() {
+            startTimer();
+        };
+
+        function validateGoal() {
+            const goal = document.getElementById('next-goal').value;
+            if (!goal) {
+                alert('请输入下一阶段目标进行验证');
+                return;
+            }
+            
+            // 简单验证逻辑
+            const issues = [];
+            
+            // 检查是否具体
+            if (goal.includes('更健康') || goal.includes('更好')) {
+                issues.push('目标不够具体，应使用更明确的描述');
+            }
+            
+            // 检查是否可衡量
+            if (!/[0-9]/.test(goal)) {
+                issues.push('目标缺乏可衡量的指标');
+            }
+            
+            // 检查是否有时限
+            if (!/(周|月|年|天|时|分|hr|min)/.test(goal)) {
+                issues.push('目标缺乏明确的时间限制');
+            }
+            
+            let resultHtml = '<h3>目标验证结果</h3>';
+            
+            if (issues.length > 0) {
+                resultHtml += '<p><strong>目标不符合SMART原则：</strong></p><ul>';
+                issues.forEach(issue => {
+                    resultHtml += `<li>${issue}</li>`;
+                });
+                resultHtml += '</ul><p>请根据以上建议修改目标</p>';
+            } else {
+                resultHtml += '<p><strong>恭喜！目标符合SMART原则</strong></p>';
+                resultHtml += '<p>目标描述清晰，具有可操作性</p>';
+            }
+            
+            document.getElementById('goal-result').innerHTML = resultHtml;
+            document.getElementById('goal-result').style.display = 'block';
+        }
+        
+        function recordFacts() {
+            const todayGoal = document.getElementById('today-goal').value;
+            const actions = document.getElementById('actions').value;
+            const results = document.getElementById('results').value;
+            const quantitative = document.getElementById('quantitative').value;
+            
+            if (!todayGoal || !actions || !results || !quantitative) {
+                alert('请完整填写所有记录内容');
+                return;
+            }
+            
+            let resultHtml = '<h3>事实记录结果</h3>';
+            resultHtml += '<table>';
+            resultHtml += '<tr><th>维度</th><th>内容</th></tr>';
+            resultHtml += `<tr><td>今日核心目标</td><td>${todayGoal}</td></tr>`;
+            resultHtml += `<tr><td>采取的行动</td><td>${actions}</td></tr>`;
+            resultHtml += `<tr><td>获得的结果</td><td>${results}</td></tr>`;
+            resultHtml += `<tr><td>量化数据</td><td>${quantitative}</td></tr>`;
+            resultHtml += '</table>';
+            resultHtml += '<p>记录已保存，可继续下一步分析</p>';
+            
+            document.getElementById('facts-result').innerHTML = resultHtml;
+            document.getElementById('facts-result').style.display = 'block';
+        }
+        
+        function analyzeProblems() {
+            const analysis = document.getElementById('problem-analysis').value;
+            if (!analysis) {
+                alert('请输入问题分析内容');
+                return;
+            }
+            
+            let resultHtml = '<h3>问题分析报告</h3>';
+            resultHtml += '<p><strong>分析内容：</strong></p>';
+            resultHtml += `<p>${analysis}</p>`;
+            resultHtml += '<p><strong>关键问题总结：</strong></p><ul>';
+            
+            // 简单分析逻辑，实际应用中可以更复杂
+            const keyPoints = analysis.split(/；|。|，/).filter(item => item.trim());
+            keyPoints.forEach(point => {
+                if (point.includes('主要原因是') || point.includes('关键问题') || point.includes('根本原因')) {
+                    resultHtml += `<li>${point}</li>`;
+                }
+            });
+            resultHtml += '</ul>';
+            resultHtml += '<p>分析报告已生成，可查看并制定优化方案</p>';
+            
+            document.getElementById('analysis-result').innerHTML = resultHtml;
+            document.getElementById('analysis-result').style.display = 'block';
+        }
+        
+        // 优化行动生成函数（原optimizeActions修改）
+        function optimizeActions() {
+            const coreFactors = document.getElementById('coreFactors').value.trim();
+            const executionPlan = document.getElementById('executionPlan').value.trim();
+            const backupPlan = document.getElementById('backupPlan').value.trim();
+            const switchCondition = document.getElementById('switchCondition').value.trim();
+
+            if (!coreFactors || !executionPlan || !backupPlan || !switchCondition) {
+                alert('请完整填写3-5-1法则的所有步骤');
+                return;
+            }
+
+            let resultHtml = '<h3>优化行动方案（3-5-1法则）</h3>';
+            resultHtml += `<div class="step-summary"><strong>1. 核心因素：</strong><br>${coreFactors}</div>`;
+            resultHtml += `<div class="step-summary"><strong>2. 执行方案（5分钟决策）：</strong><br>${executionPlan}</div>`;
+            resultHtml += `<div class="step-summary"><strong>3. 备用方案：</strong><br>${backupPlan}</div>`;
+            resultHtml += `<div class="step-summary"><strong>4. 切换条件：</strong><br>${switchCondition}</div>`;
+            
+            document.getElementById('action-result').innerHTML = resultHtml;
+            document.getElementById('action-result').style.display = 'block';
+        }
+
+        
+        function saveAsCSV() {
+            // 获取表单数据
+            let todayGoal = '';
+            try {
+                todayGoal = document.getElementById('today-goal').value;
+            } catch (error) {
+                todayGoal = '';
+            }
+
+            let actions = '';
+            try {
+                actions = document.getElementById('actions').value;
+            } catch (error) {
+                actions = '';
+            }
+
+            let results = '';
+            try {
+                results = document.getElementById('results').value;
+            } catch (error) {
+                results = '';
+            }
+
+            let quantitative = '';
+            try {
+                quantitative = document.getElementById('quantitative').value;
+            } catch (error) {
+                quantitative = '';
+            }
+
+            let analysis = '';
+            try {
+                analysis = document.getElementById('problem-analysis').value;
+            } catch (error) {
+                analysis = '';
+            }
+
+            let optimizedActions = '';
+            try {
+                optimizedActions = document.getElementById('optimized-actions').value;
+            } catch (error) {
+                optimizedActions = '';
+            }
+
+            let nextGoal = '';
+            try {
+                nextGoal = document.getElementById('next-goal').value;
+            } catch (error) {
+                nextGoal = '';
+            }
+            
+            // 替换原optimizedActions为3-5-1相关字段
+            const coreFactors = document.getElementById('coreFactors')?.value || '';
+            const executionPlan = document.getElementById('executionPlan')?.value || '';
+            const backupPlan = document.getElementById('backupPlan')?.value || '';
+            const switchCondition = document.getElementById('switchCondition')?.value || '';
+            
+            // 构造CSV内容（更新列名为3-5-1相关）
+            const csvContent = [
+                '今日核心目标,行动,结果,量化数据,问题分析,核心因素,执行方案,备用方案,切换条件,下一阶段目标',
+                `"${todayGoal}","${actions}","${results}","${quantitative}","${analysis}",` +
+                `"${coreFactors}","${executionPlan}","${backupPlan}","${switchCondition}","${nextGoal}"`
+            ].join('\n');
+                   
+            // 添加BOM以确保Excel正确识别UTF-8编码
+            const bom = new Uint8Array([0xEF, 0xBB, 0xBF]);
+            const blob = new Blob([bom, csvContent], { type: 'text/csv;charset=utf-8;' });
+            
+            // 创建下载链接
+            const link = document.createElement('a');
+            if (link.download !== undefined) { // feature detection
+                // Browsers that support HTML5 download attribute
+                const url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                
+                // 生成包含日期和时间的文件名
+                const now = new Date();
+                const year = now.getFullYear();
+                const month = String(now.getMonth() + 1).padStart(2, '0');
+                const day = String(now.getDate()).padStart(2, '0');
+                const hours = String(now.getHours()).padStart(2, '0');
+                const minutes = String(now.getMinutes()).padStart(2, '0');
+                const fileName = `设定目标_${year}${month}${day}_${hours}${minutes}.csv`;
+                
+                link.setAttribute('download', fileName);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                // 保存当前路径到localStorage
+                localStorage.setItem('lastSavePath', fileName);
+            }
+        }
+    </script>
+</body>
+</html>
